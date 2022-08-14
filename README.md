@@ -5,12 +5,12 @@ Install Apache-Storm-2.2.0 for running clusters.
 Step 1 — Verify Java:
 Use the following command to check whether you have Java already installed on your system.
 
-$ java -version
+	$ java -version
 
-output:
-openjdk version  "11.0.10"
-OpenJDK Runtime Environment (build 1.8.0_222-8u222-b10-1ubuntu1~18.04.1-b10)
-OpenJDK 64-Bit Server VM (build 25.222-b10, mixed mode)
+	output:
+	openjdk version  "11.0.10"
+	OpenJDK Runtime Environment (build 1.8.0_222-8u222-b10-1ubuntu1~18.04.1-b10)
+	OpenJDK 64-Bit Server VM (build 25.222-b10, mixed mode)
 
 
 If Java is already there, then you would see its version number. Else, download and install the latest version of JDK.
@@ -206,7 +206,7 @@ For checking the logs of nimbus:
 $ tail -f logs/nimbus.log
 
 
-# Reference
+# References
 https://www.tutorialspoint.com/apache_storm/apache_storm_installation.htm
 
 https://streamparse.readthedocs.io/en/stable/quickstart.html#
