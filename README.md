@@ -15,7 +15,7 @@ Use the following command to check whether you have Java already installed on yo
 
 If Java is already there, then you would see its version number. Else, download and install the latest version of JDK.
 
-###Step 2 — Install Apache ZooKeeper:
+### Step 2 — Install Apache ZooKeeper:
 To install the ZooKeeper framework on your machine, visit the following link and download ZooKeeper . In this project we are using ZooKeeper 3.4.14 (ZooKeeper-3.4.14.tar.gz). http://zookeeper.apache.org/releases.html
 Extract the tar file using the following commands:
 
@@ -53,7 +53,7 @@ Once the configuration file has been saved successfully, you can start the ZooKe
 
 
 
-###Step 3 — Install Apache Storm:
+### Step 3 — Install Apache Storm:
 To install the Storm framework on your machine, visit the following link and download Storm . In this project we are using Storm 2.2.0 (Storm-2.2.0.tar.gz). 
 http://storm.apache.org/downloads.html
 Step3.1 Extract the tar file using the following commands and make data directory:
@@ -63,7 +63,7 @@ Step3.1 Extract the tar file using the following commands and make data director
 	$ cd apache-storm-2.2.0
 	$ mkdir data
 
-####Step 3.2 The current release of Storm contains a file at conf/storm.yaml that configures Storm daemons. 
+#### Step 3.2 The current release of Storm contains a file at conf/storm.yaml that configures Storm daemons. 
 	$ nano conf/storm.yaml
 
 	Add the following information to that file.
@@ -92,7 +92,7 @@ Step3.1 Extract the tar file using the following commands and make data director
 	worker.childopts: "-Xmx%HEAP-MEM%m -XX:+HeapDumpOnOutOfMemoryError -XX:HeapDumpPath=artifacts/heapdump"
 	worker.gc.childopts: ""
 
- ####*Note: change ui.host: "192.168.99.156" to your ip address.
+ #### *Note: change ui.host: "192.168.99.156" to your ip address.
 After applying all the changes, save and return to the terminal.
 ####Step  3.3 Adding storm/bin to PATH:
 Open the bashrc file and add the following line to the end of it, then save and exit.
@@ -112,14 +112,14 @@ Now you can run the storm commands in terminal, for check it run this command an
 	Branch (no branch)
 	Compiled by ec2-user on 2020-06-18T16:51Z
 	From source with checksum c247d5df86c3d159e386b1d5d7827daa
-####*Note: If you have response like this:
+#### *Note: If you have response like this:
 bin/storm: line 42: 10 * ‘python’: + ‘python’:: syntax error: operand expected (error token is "‘python’: + ‘python’:")
 bin/storm: line 43: ((: < 26 : syntax error: operand expected (error token is "< 26 ")
 /usr/bin/env: ‘python’: No such file or directory
 It is because of ubuntu 20, run this command to fix it:
 $ sudo apt-get install python-is-python3
 
- ####Step 3.4 − Start the Nimbus
+ #### Step 3.4 − Start the Nimbus
 Restart the zookeeper:
 
 	$ bin/zkServer.sh restart
@@ -129,7 +129,7 @@ Restart the zookeeper:
 	$ bin/storm nimbus
 Note: the short key for exiting from tmux session: ctrl+B+D
 	the command for enter the session: $ tmux a -t “name of session”
-####Step 3.5 Start the Supervisor
+#### Step 3.5 Start the Supervisor
 	$ tmux new -s supervisor
 	$ bin/storm supervisor
 	Step 3.6 Start the UI
@@ -138,72 +138,70 @@ Note: the short key for exiting from tmux session: ctrl+B+D
 After starting the Storm user interface application, type the URL http://localhost:8090 in your favorite browser and you could see Storm cluster information and its running topology. The page should look similar to the following screenshot.
 
 
-###Step 4 — Install Streamparse:
+### Step 4 — Install Streamparse:
 Streamparse lets you run Python code against real-time streams of data via Apache Storm. With streamparse you can create Storm bolts and spouts in Python. To install this package follow these commands:
 
-Step 4.1 Confirm that you have lein installed by running:
-$ sudo apt install leiningen
+#### Step 4.1 Confirm that you have lein installed by running:
+	$ sudo apt install leiningen
 
-$ lein version
+	$ lein version
 
-Output:
-Leiningen 2.9.1 on Java 11.0.10 OpenJDK 64-Bit Server VM
+	Output:
+	Leiningen 2.9.1 on Java 11.0.10 OpenJDK 64-Bit Server VM
 
-Step 4.2 Install streamparse
+#### Step 4.2 Install streamparse
 
-$ sudo pip install streamparse
+	$ sudo pip install streamparse
 
-Step 5 — Configuration Streamparse Project:
+### Step 5 — Configuration Streamparse Project:
 If you have streamparse project  code you must change “config.json” and “project.clj” files by following below commands, otherwise you can make a new streamparse project.
 streamparse projects expect to have the following directory layout:
-
-
 You need to change “config.json” and “project.clj” files. First you need to make a new directory to save the stream’’s logs.
 
-$ cd /opt/apache-storm-2.2.0
-$ mkdir streamlogs
+	$ cd /opt/apache-storm-2.2.0
+	$ mkdir streamlogs
 
 Edit the config.json file, you must change the log path:
 
- "Log":
-         { "path": "/opt/apache-storm-2.2.0/streamlogs/",
+	 "Log":
+		 { "path": "/opt/apache-storm-2.2.0/streamlogs/",
 
 Edit the project.clj file. Replace all lines with below block:
 
-(require 'cemerick.pomegranate.aether)
-(cemerick.pomegranate.aether/register-wagon-factory!
- "http" #(org.apache.maven.wagon.providers.http.HttpWagon.))
-(defproject fkjewerlly "0.0.1-SNAPSHOT"
-  :resource-paths ["_resources"]
-  :target-path "_build"
-  :min-lein-version "2.0.0"
-  :jvm-opts ["-client"]
-  :dependencies  [[org.apache.storm/storm-core "2.2.0"]
-              	[org.apache.storm/flux-core "2.2.0"]]
-  :jar-exclusions 	[#"log4j\.properties" #"org\.apache\.storm\.(?!flux)" #"trident" #"META-INF" #"meta-inf" #"\.yaml"]
-  :uberjar-exclusions [#"log4j\.properties" #"org\.apache\.storm\.(?!flux)" #"trident" #"META-INF" #"meta-inf" #"\.yaml"]
-  )
+	(require 'cemerick.pomegranate.aether)
+	(cemerick.pomegranate.aether/register-wagon-factory!
+	 "http" #(org.apache.maven.wagon.providers.http.HttpWagon.))
+	(defproject fkjewerlly "0.0.1-SNAPSHOT"
+	  :resource-paths ["_resources"]
+	  :target-path "_build"
+	  :min-lein-version "2.0.0"
+	  :jvm-opts ["-client"]
+	  :dependencies  [[org.apache.storm/storm-core "2.2.0"]
+			[org.apache.storm/flux-core "2.2.0"]]
+	  :jar-exclusions 	[#"log4j\.properties" #"org\.apache\.storm\.(?!flux)" #"trident" #"META-INF" #"meta-inf" #"\.yaml"]
+	  :uberjar-exclusions [#"log4j\.properties" #"org\.apache\.storm\.(?!flux)" #"trident" #"META-INF" #"meta-inf" #"\.yaml"]
+	  )
 
-Now you can run your project by command:
+#### Now you can run your project by command:
 
-$ sparse run --name ‘name of your topology file’
+	$ sparse run --name ‘name of your topology file’
 
 You can see the summary of all running topologies and etc. at http://localhost:8090. 
 
-Step 6 — Check the log files:
+### Step 6 — Check the log files:
 For checking the logs of worker:
 
-$ cd /opt/apache-storm-2.2.0
-$ tail -f logs/workers-artifacts/aassttiinn_topology-4-1619430874/6700/worker.log
+	$ cd /opt/apache-storm-2.2.0
+	$ tail -f logs/workers-artifacts/aassttiinn_topology-4-1619430874/6700/worker.log
 
 There are files for every running the topology file and named the same as your topology.
 
 For checking the logs of supervisor:
-$ tail -f logs/supervisor.log
+	$ tail -f logs/supervisor.log
 
 For checking the logs of nimbus:
 
-$ tail -f logs/nimbus.log
+	$ tail -f logs/nimbus.log
 
 
 # References
